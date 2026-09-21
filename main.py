@@ -1,11 +1,11 @@
-import tkinter as tk #сам GUI
-import shlex #работа с командной строкой
+import tkinter as tk
+import shlex 
 
 First_string = "Начальная строка в ковычках (VFS)"
 
 class Emulator(tk.Tk):
-    def __init__(self): # инициализируем (объект)
-        super().__init__()#вызов родительского класса
+    def __init__(self):
+        super().__init__()
 
         self.title("Название файла")
 
@@ -16,7 +16,7 @@ class Emulator(tk.Tk):
         # Строка ввода
         self.entry = tk.Entry(self, bg="white", fg="black", insertbackground="white")
         self.entry.pack(fill =tk.X)
-        self.entry.bind("<Return>", self.on_enter) #команда отработки ф-и при энтер
+        self.entry.bind("<Return>", self.on_enter) 
 
         # Первое приглашение
         self.show_first_str()
@@ -26,13 +26,12 @@ class Emulator(tk.Tk):
         self.output.see(tk.END)
 
     def on_enter(self, event = None):
-        my_text = self.entry.get() #получаем введенный текст
-        self.entry.delete(0, tk.END)#удаляем все введенные символы
-
-        self.output.insert(tk.END, my_text + "\n")#работа с несколькими словами
+        my_text = self.entry.get() 
+        self.entry.delete(0, tk.END)
+        self.output.insert(tk.END, my_text + "\n")
 
         try:
-            args = shlex.split(my_text) #разделение текста
+            args = shlex.split(my_text)
         except: #иначе
             self.output.insert(tk.END, f"Ошибка работы программы \n")
             self.show_first_str()
@@ -48,14 +47,14 @@ class Emulator(tk.Tk):
         self.parser(command, command_args)
         self.show_first_str()
 
-    def parser(self, command, args): # 3
+    def parser(self, command, args):
         if command == "help": # список
             self.output.insert(tk.END,
                 "Команды:\n"
                 "help - показать эту справку\n"
-                "cd - ввести 1 элемент через \ \n" #5
-                "Is - ввести массив элементов через \ \n" #5
-                "exit - выйти из программы\n" #6
+                "cd - ввести 1 элемент через \ \n" 
+                "Is - ввести массив элементов через \ \n"
+                "exit - выйти из программы\n" 
             )
 
         elif (command == "cd"):
@@ -67,7 +66,7 @@ class Emulator(tk.Tk):
             self.output.insert(tk.END, f"ls {args}\n")
         elif command == "exit":
             self.destroy()
-        else: #4
+        else: 
             self.output.insert(tk.END, "Ошибка, попробуйте ввести строку снова\n")
 
 
